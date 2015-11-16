@@ -4,7 +4,7 @@
   "description": "our little wiki",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon -e html,js,css ./app.js"
   },
   "repository": {
     "type": "git",
@@ -20,10 +20,9 @@
     "body-parser": "^1.14.1",
     "chalk": "^1.1.1",
     "express": "^4.13.3",
+    "mongoose": "^4.2.6",
     "morgan": "^1.6.1",
     "nodemon": "^1.8.1",
     "swig": "^1.4.2"
-  },"scripts": {
-    "start": "nodemon -e html,js,css ./app.js"
   }
 }
