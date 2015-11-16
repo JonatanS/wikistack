@@ -12,7 +12,7 @@ var Page = new Schema( {
 	content: String,
 	date: {type: Date, default: Date.now},
 	status: Boolean,
-	author: String
+	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
 var User = new Schema( {
@@ -20,11 +20,11 @@ var User = new Schema( {
 	email: { type:String, index: {unique: true} }
 });
 
-/*field: {type: String},
-field: {type: Number},
-field: {type: Date },
-field: {type: Boolean},
-field: {type: Array},
-field: {type: Object},
-field: {type: mongoose.Schema.Types.ObjectId, ref: 'Model'}
-*/
+
+var Page = mongoose.model('Page', pageSchema);
+var User = mongoose.model('User', userSchema);
+
+module.exports = {
+  Page: Page,
+  User: User
+};
