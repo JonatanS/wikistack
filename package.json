@@ -1,0 +1,29 @@
+{
+  "name": "wikistack",
+  "version": "1.0.0",
+  "description": "our little wiki",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonatanS/wikistack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JonatanS/wikistack/issues"
+  },
+  "homepage": "https://github.com/JonatanS/wikistack#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "chalk": "^1.1.1",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "nodemon": "^1.8.1",
+    "swig": "^1.4.2"
+  },"scripts": {
+    "start": "nodemon -e html,js,css ./app.js"
+  }
+}
