@@ -8,7 +8,6 @@ var User = models.User;
 router.use('/', function (req, res, next){
 	// console.log("Path: " + req.path);
 	// console.log("Body: " + req.body.title);
-
 	next();
 });
 
@@ -16,6 +15,13 @@ router.use('/', function (req, res, next){
 router.get('/add', function (req, res, next){
 	//res.send('got to GET /wiki/add');
 	res.render('addpage.html');
+});
+
+router.get("/search", function (req, res) {
+	var reqArr = req.query.search.split(" ");
+	var foundPages = Page.findByTag(reqArr[0]);
+	res.render('index', foundPages);
+
 });
 
 
@@ -31,15 +37,11 @@ router.get("/:urlTitle", function (req, res) {
 
 //submit a new page to the DB
 router.post('/', function (req, res, next){
-	// console.log("body name: " + req.body.title);
-	// console.log("form control: " + req.body['content']);
-	// console.log("page-status: " + req.body['status']);
-	//res.send('got to POST /wiki');
-
+	console.log("req body ", req.body);
  	 var page = new Page({
     	title: req.body.title,
     	content: req.body.content,
-    	//tags: req.body.tags,
+    	tags: req.body.tags.split(","),
     	status: true
   	});
 	page.save().then(function (saveResult) {
@@ -52,6 +54,8 @@ router.post('/', function (req, res, next){
 	});
 
 });
+
+
 
 
 

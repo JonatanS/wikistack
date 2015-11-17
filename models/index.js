@@ -23,18 +23,17 @@ var pageSchema = new Schema( {
 //pre-VALIDATE URL there is also a pre'save':
 //http://mongoosejs.com/docs/middleware.html
 pageSchema.pre('validate', function (next){
-	console.log("pre-save title: "+ this.title);
 	var urlTitle = this.title.replace(/[\W_]+/g,"_");
 	if (urlTitle[urlTitle.length -1 ] === '_') urlTitle = urlTitle.slice(0, urlTitle.length -1);
-	console.log("urlTitle " + urlTitle);
 	this.urlTitle = urlTitle;
-	console.log("tags " + tags);
 	return next();
 });
 
-// pageSchema.pre('save', function (next) {
-// 	var convertTags =
-// })
+
+pageSchema.statics.findByTag = function(tag){
+    return this.find({ tags: {$elemMatch: { $eq: tag } }}).exec()
+}
+
 
 var userSchema = new Schema( {
 	name: {type: String, required: true},
