@@ -28,8 +28,13 @@ pageSchema.pre('validate', function (next){
 	if (urlTitle[urlTitle.length -1 ] === '_') urlTitle = urlTitle.slice(0, urlTitle.length -1);
 	console.log("urlTitle " + urlTitle);
 	this.urlTitle = urlTitle;
+	console.log("tags " + tags);
 	return next();
 });
+
+// pageSchema.pre('save', function (next) {
+// 	var convertTags =
+// })
 
 var userSchema = new Schema( {
 	name: {type: String, required: true},

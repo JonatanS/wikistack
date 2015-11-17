@@ -38,8 +38,8 @@ router.post('/', function (req, res, next){
 
  	 var page = new Page({
     	title: req.body.title,
-    	content: req.body['content'],
-    	//urlTitle: urlTitle,
+    	content: req.body.content,
+    	//tags: req.body.tags,
     	status: true
   	});
 	page.save().then(function (saveResult) {
