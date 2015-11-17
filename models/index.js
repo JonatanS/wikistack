@@ -14,7 +14,8 @@ var pageSchema = new Schema( {
 	content: {type: String, required: true},
 	date: {type: Date, default: Date.now},
 	status: Boolean,
-	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	tags: [String]
 	// The ref option is what tells Mongoose which model to use during population — in our case the User model.
 	//All _ids we store here must be document _ids from the User model.
 });

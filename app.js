@@ -2,12 +2,13 @@ var express = require( 'express' );
 var chalk = require('chalk');
 var morgan = require('morgan');
 var swig = require('swig');
+require('./filters')(swig);
 var bodyParser = require('body-parser');
 //var socketio = require('socket.io');
 var routes = require('./routes/');
+
 //var io = socketio.listen(server);
 //app.use('/', routes(io));
-
 
 var app = express(); // creates an instance of an express application
 var port = 3000;

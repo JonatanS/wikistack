@@ -2,14 +2,19 @@ var express = require('express');
 var fs = require('fs');
 var bp = require('body-parser');
 var router = express.Router();
-
-router.use('/', function (req, res){
-	console.log("Path: " + req.path);
-	console.log("Body: " + req.body);
-	res.render('index.html')
-});
+var models = require('../models/');
+var Page = models.Page;
+var User = models.User;
 
 
+
+
+router.get('/', function (req, res, next) {
+	Page.find({}).exec().then(function(pages) {
+		res.render('index', {pages})
+	})
+	//res.render('index.html')
+})
 
 
 
