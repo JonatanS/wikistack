@@ -12,11 +12,22 @@ router.use('/', function (req, res, next){
 	next();
 });
 
-//retreive all wiki pages:
-router.get('/', function (req, res, next){
-	//res.send('got to GET /wiki');
-	//res.render('wikipage.html');
-	res.redirect('/');
+//retreive the 'add a page' form:
+router.get('/add', function (req, res, next){
+	//res.send('got to GET /wiki/add');
+	res.render('addpage.html');
+});
+
+
+router.get("/:urlTitle", function (req, res) {
+	// get page content by URL:
+	console.log("render page: " + req.params.urlTitle);
+	Page.findOne({'urlTitle' : req.params.urlTitle}).exec().then(function(page){
+		//now we have a json object
+		console.log(page);
+		res.json(page);
+	});
+	//res.send('hit dynamic route at ' + req.params.urlTitle);
 });
 
 //submit a new page to the DB
@@ -32,27 +43,19 @@ router.post('/', function (req, res, next){
     	//urlTitle: urlTitle,
     	status: true
   	});
-
-	// STUDENT ASSIGNMENT:
-	// make sure we only redirect *after* our save is complete!
-	// note: `.save` returns a promise or it can take a callback.
-	page.save()
-	.then(function () {
-		console.log("saving...")
-		res.redirect('/');
-	}, function(err){
-		console.error(err);
-});
-
-
-// -> after save -> res.redirect('/');
+	page.save().then(function (saveResult) {
+		var nextRoute = '/wiki/' + saveResult.urlTitle;
+		console.log("saving and redirecting to: " + nextRoute);
+		res.redirect(nextRoute);
+		//res.json(saveResult);
+		//next;
+		}, function(err){
+			console.error(err);
+	});
 
 });
 
-//retreive the 'add a page' form:
-router.get('/add', function (req, res, next){
-	//res.send('got to GET /wiki/add');
-	res.render('addpage.html');
-});
+
+
 
 module.exports = router;

@@ -19,7 +19,8 @@ var pageSchema = new Schema( {
 	//All _ids we store here must be document _ids from the User model.
 });
 
-//pre-VALIDATE URL there is also a pre'save'
+//pre-VALIDATE URL there is also a pre'save':
+//http://mongoosejs.com/docs/middleware.html
 pageSchema.pre('validate', function (next){
 	console.log("pre-save title: "+ this.title);
 	var urlTitle = this.title.replace(/[\W_]+/g,"_");
