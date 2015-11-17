@@ -28,21 +28,20 @@ router.post('/', function (req, res, next){
 
  	 var page = new Page({
     	title: req.body.title,
-    	urlTitle: 'www.google.com',
     	content: req.body['content'],
+    	//urlTitle: urlTitle,
     	status: true
   	});
 
-
-// STUDENT ASSIGNMENT:
-// make sure we only redirect *after* our save is complete!
-// note: `.save` returns a promise or it can take a callback.
-page.save()
-.then(function () {
-	console.log("saving...")
-	res.redirect('/');
-}, function(err){
-	console.error(err);
+	// STUDENT ASSIGNMENT:
+	// make sure we only redirect *after* our save is complete!
+	// note: `.save` returns a promise or it can take a callback.
+	page.save()
+	.then(function () {
+		console.log("saving...")
+		res.redirect('/');
+	}, function(err){
+		console.error(err);
 });
 
 

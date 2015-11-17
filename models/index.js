@@ -19,9 +19,19 @@ var pageSchema = new Schema( {
 	//All _ids we store here must be document _ids from the User model.
 });
 
+//pre-VALIDATE URL there is also a pre'save'
+pageSchema.pre('validate', function (next){
+	console.log("pre-save title: "+ this.title);
+	var urlTitle = this.title.replace(/[\W_]+/g,"_");
+	if (urlTitle[urlTitle.length -1 ] === '_') urlTitle = urlTitle.slice(0, urlTitle.length -1);
+	console.log("urlTitle " + urlTitle);
+	this.urlTitle = urlTitle;
+	return next();
+});
+
 var userSchema = new Schema( {
 	name: {type: String, required: true},
-	email: { type:String, required: true, unique: true}
+	email: { type: String, required: true, unique: true}
 });
 
 /*
