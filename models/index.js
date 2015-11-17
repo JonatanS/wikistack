@@ -6,21 +6,42 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongodb connection error:'));
 var Schema = mongoose.Schema;
 
+
+//using vaidation to require certain fields are set:
 var Page = new Schema( {
-	title: String,
-	urlTitle: String,
-	content: String,
+	title: {type: String, required: true},
+	urlTitle: {type: String, required: true},
+	content: {type: String, required: true},
 	date: {type: Date, default: Date.now},
 	status: Boolean,
-	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'} 
+	// The ref option is what tells Mongoose which model to use during population — in our case the User model. 
+	//All _ids we store here must be document _ids from the User model.
 });
 
 var User = new Schema( {
-	name: String,
-	email: { type:String, index: {unique: true} }
+	name: {type: String, required: true},
+	email: { type:String, required: true, unique: true}
+});
+
+/*
+// NOTE: methods must be added to the schema before compiling it with mongoose.model()
+kittySchema.methods.speak = function () {
+  var greeting = this.name
+    ? "Meow name is " + this.name
+    : "I don't have a name";
+  console.log(greeting);
+  ////console.log('%s %s is a %s.', person.name.first, person.name.last, person.occupation
+  //use .populate command to fetch both the page and author name as a multi-request
+}
+*/
+
+Page.virtual('route').get(function () {
+	return  '/wiki/' + this.urlTitle;
 });
 
 
+//compile the schemas into models using mongoose.model():
 var Page = mongoose.model('Page', pageSchema);
 var User = mongoose.model('User', userSchema);
 
