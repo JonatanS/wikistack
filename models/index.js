@@ -8,18 +8,18 @@ var Schema = mongoose.Schema;
 
 
 //using vaidation to require certain fields are set:
-var Page = new Schema( {
+var pageSchema = new Schema( {
 	title: {type: String, required: true},
 	urlTitle: {type: String, required: true},
 	content: {type: String, required: true},
 	date: {type: Date, default: Date.now},
 	status: Boolean,
-	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'} 
-	// The ref option is what tells Mongoose which model to use during population — in our case the User model. 
+	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+	// The ref option is what tells Mongoose which model to use during population — in our case the User model.
 	//All _ids we store here must be document _ids from the User model.
 });
 
-var User = new Schema( {
+var userSchema = new Schema( {
 	name: {type: String, required: true},
 	email: { type:String, required: true, unique: true}
 });
@@ -36,7 +36,7 @@ kittySchema.methods.speak = function () {
 }
 */
 
-Page.virtual('route').get(function () {
+pageSchema.virtual('route').get(function () {
 	return  '/wiki/' + this.urlTitle;
 });
 
