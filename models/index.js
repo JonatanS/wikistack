@@ -30,8 +30,19 @@ pageSchema.pre('validate', function (next){
 });
 
 
+//static 'class' methods as opposed to instance methods:
 pageSchema.statics.findByTag = function(tag){
-    return this.find({ tags: {$elemMatch: { $eq: tag } }}).exec()
+	// $in matches a set of possibilities
+	    return Page.find({
+        tags: {
+            $in: [tag]
+        }
+    }).exec();
+	    
+ //    var res = Page.find({ tags: {$elemMatch: {$eq: tag}}}).exec();
+
+	// console.log("Result in findbytag : %s", res.toString());
+	// return res;
 }
 
 
@@ -40,17 +51,6 @@ var userSchema = new Schema( {
 	email: { type: String, required: true, unique: true}
 });
 
-/*
-// NOTE: methods must be added to the schema before compiling it with mongoose.model()
-kittySchema.methods.speak = function () {
-  var greeting = this.name
-    ? "Meow name is " + this.name
-    : "I don't have a name";
-  console.log(greeting);
-  ////console.log('%s %s is a %s.', person.name.first, person.name.last, person.occupation
-  //use .populate command to fetch both the page and author name as a multi-request
-}
-*/
 
 pageSchema.virtual('route').get(function () {
 	return  '/wiki/' + this.urlTitle;

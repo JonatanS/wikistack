@@ -6,21 +6,26 @@ var Page = models.Page;
 var User = models.User;
 
 router.use('/', function (req, res, next){
-	// console.log("Path: " + req.path);
+	console.log("Path: " + req.path);
 	// console.log("Body: " + req.body.title);
 	next();
 });
 
-//retreive the 'add a page' form:
+//retrieve the 'add a page' form:
 router.get('/add', function (req, res, next){
 	//res.send('got to GET /wiki/add');
 	res.render('addpage.html');
 });
 
-router.get("/search", function (req, res) {
-	var reqArr = req.query.search.split(" ");
-	var foundPages = Page.findByTag(reqArr[0]);
-	res.render('index', foundPages);
+router.get('/search', function (req, res, next) {
+
+    var tagToSearch = req.query.search;
+
+    Page.findByTag(tagToSearch)
+        .then(function (pages) {
+            res.render('index', { pages: pages });	//whaaaaaa!!!! Our problem was not to feed it in as an object :(
+        })
+        .then(null, next);
 
 });
 
@@ -32,7 +37,6 @@ router.get("/:urlTitle", function (req, res) {
 		//Double object??
 		res.render('wikipage', page);
 	});
-	//res.send('hit dynamic route at ' + req.params.urlTitle);
 });
 
 //submit a new page to the DB
